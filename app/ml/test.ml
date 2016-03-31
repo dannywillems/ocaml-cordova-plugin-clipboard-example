@@ -1,7 +1,7 @@
 let on_device_ready _ =
-  let c = Clipboard.clipboard () in
-  c##copy (Js.string "Hello world");
-  c##paste (fun str -> Dom_html.window##(alert str));
+  let c = Clipboard.t () in
+  c#copy "Hello world";
+  c#paste (fun str -> Dom_html.window##(alert (Js.string str)));
   Js._false
 
 let _ =
