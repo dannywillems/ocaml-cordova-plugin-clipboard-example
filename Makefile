@@ -21,14 +21,14 @@ PROD_DIRECTORY				= www
 
 ##### js_of_ocaml configuration
 ML_DIRECTORY				= 	$(DEV_DIRECTORY)/ml
-ML_FILES 					=	$(ML_DIRECTORY)/clipboard.ml \
-								$(ML_DIRECTORY)/test.ml
-MLI_FILES 					=	$(ML_DIRECTORY)/clipboard.mli
+ML_FILES 					=	$(ML_DIRECTORY)/test.ml
+MLI_FILES 					=
 ML_JS_DIRECTORY				=	$(PROD_DIRECTORY)/js
 ML_JS_OUTPUT_FILE			=	main.js
 
 CUSTOM_SYNTAX				=
-CUSTOM_PACKAGE 				=
+CUSTOM_PACKAGE 				= -package gen_js_api \
+							  -package cordova-plugin-clipboard
 
 ##### Less configuration
 LESS_DIR					= $(DEV_DIRECTORY)/less
@@ -95,10 +95,8 @@ all: init_dir css gen_js_api $(PROD_DIRECTORY_LIST)
 
 gen_js_api:
 	mkdir -p $(ML_JS_DIRECTORY)
-	ocamlfind gen_js_api/gen_js_api $(MLI_FILES)
-	ocamlfind ocamlc -package gen_js_api $(MLI_FILES)
 	ocamlfind ocamlc -I $(ML_DIRECTORY) -o $(TMP_OUT_BYTECODE) \
-		-no-check-prims -package gen_js_api -package js_of_ocaml -package js_of_ocaml.ppx -linkpkg $(ML_FILES)
+		-no-check-prims $(BASIC_PACKAGE) $(CUSTOM_PACKAGE) -linkpkg $(ML_FILES)
 	$(CC_JS) --pretty --debug-info +gen_js_api/ojs_runtime.js $(TMP_OUT_BYTECODE)
 
 ##### Compile ml to js
