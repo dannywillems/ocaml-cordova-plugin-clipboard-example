@@ -1,9 +1,7 @@
 let on_device_ready _ =
-  let c = Cordova_clipboard.t () in
-  c#copy "Hello world" ();
-  c#paste (fun str -> Dom_html.window##(alert (Js.string str))) ();
-  Js._false
+  let c = Cordova_clipboard.clipboard () in
+  Cordova_clipboard.copy c "Hello world" ();
+  Cordova_clipboard.paste c (fun str -> Jsoo_lib.alert str) ()
 
 let _ =
-  Dom.addEventListener Dom_html.document (Dom.Event.make "deviceready")
-  (Dom_html.handler on_device_ready) Js._false
+  Cordova.Event.device_ready on_device_ready
