@@ -1,5 +1,7 @@
 # ocaml-cordova-plugin-clipboard-example
 
+[![Build Status](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-clipboard-example.svg?branch=master)](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-clipboard-example)
+
 This is an example of the binding to the *cordova-plugin-clipboard*. See the
 binding [here](https://github.com/dannywillems/ocaml-cordova-plugin-clipboard).
 
